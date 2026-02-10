@@ -6,40 +6,42 @@
   <title>Happy Birthday Mou 💖</title>
 
   <style>
-   body {
-  margin: 0;
-  min-height: 100vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;   /* centers content */
-  font-family: 'Segoe UI', sans-serif;
-  background: linear-gradient(135deg, #7b2ff7, #f107a3);
-  overflow-x: hidden;       /* 🔥 removes horizontal extra space */
-  color: white;
-  text-align: center;
-  padding: 20px;
-  box-sizing: border-box;
-}
+    * { box-sizing: border-box; }
 
-.card {
-  width: 100%;
-  max-width: 420px;         /* keeps it mobile friendly */
-  margin: 0 auto;          /* center horizontally */
-}
-
-    .screen {
+    body {
+      margin: 0;
       min-height: 100vh;
       display: flex;
       align-items: center;
       justify-content: center;
-      flex-direction: column;
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(135deg, #7b2ff7, #f107a3);
+      overflow-x: hidden;
+      color: white;
+      text-align: center;
       padding: 20px;
     }
 
-    
+    .card {
+      width: 100%;
+      max-width: 420px;
+      background: rgba(0,0,0,0.18);
+      padding: 25px 20px;
+      border-radius: 20px;
+      backdrop-filter: blur(6px);
+      box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+    }
 
-    h1 { margin: 10px 0; font-size: 2.2rem; }
-    h2 { margin: 15px 0 10px; }
+    .screen {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+    }
+
+    h1 { margin: 10px 0; font-size: 2.1rem; }
+    h2 { margin: 18px 0 10px; }
     p { line-height: 1.6; font-size: 1.05rem; }
 
     input {
@@ -47,7 +49,7 @@
       border-radius: 10px;
       border: none;
       width: 80%;
-      max-width: 250px;
+      max-width: 260px;
       font-size: 1rem;
       text-align: center;
     }
@@ -77,15 +79,14 @@
     .heart {
       position: fixed;
       bottom: -20px;
-      color: rgba(255,255,255,0.7);
       animation: floatUp 6s linear infinite;
       font-size: 20px;
       pointer-events: none;
     }
 
     @keyframes floatUp {
-      from { transform: translateY(0) translateX(0); opacity: 1; }
-      to { transform: translateY(-110vh) translateX(40px); opacity: 0; }
+      from { transform: translateY(0); opacity: 1; }
+      to { transform: translateY(-110vh); opacity: 0; }
     }
 
     .candle {
@@ -94,8 +95,8 @@
       margin: 10px 0;
     }
 
-    footer {
-      margin-top: 20px;
+    .signature {
+      margin-top: 15px;
       font-size: 0.9rem;
       opacity: 0.85;
     }
@@ -116,7 +117,7 @@
     </div>
   </div>
 
-  <!-- Main Content -->
+  <!-- Main Screen -->
   <div class="screen hidden" id="mainScreen">
     <div class="card">
       <h1>Happy Birthday, Mou 🎉💖</h1>
@@ -125,9 +126,9 @@
 
       <h2>Our Little Memories 📸</h2>
       <div class="gallery">
-        <img src="img1.jpg" alt="Memory 1">
-        <img src="img2.jpg" alt="Memory 2">
-        <img src="img3.jpg" alt="Memory 3">
+        <img src="img1.jpg">
+        <img src="img2.jpg">
+        <img src="img3.jpg">
       </div>
 
       <h2>Why I Love You 💌</h2>
@@ -139,33 +140,29 @@
       </p>
 
       <button onclick="showSurprise()">Click for Your Surprise 🎁</button>
-      <p id="surpriseText" class="hidden">No matter what, you are my favorite person in this universe 🌍💖</p>
+      <p id="surpriseText" class="hidden">
+        No matter what, you are my favorite person in this universe 🌍💖
+      </p>
 
       <h2>Make a Wish 🕯️</h2>
       <div class="candle" onclick="blowCandle()">🕯️</div>
       <p id="wishText" class="hidden">Wish granted 🎉 May all your dreams come true 💫</p>
 
       <h2>One Line for Me 💬</h2>
+      <input type="text" id="replyInput" placeholder="Write something for me..." />
+      <br/>
+      <button onclick="submitReply()">Submit 💌</button>
 
-<div class="one-line-card">
-  <input type="text" id="replyInput" placeholder="Write something for me..." />
-  <br/>
-  <button onclick="submitReply()">Submit 💌</button>
+      <p id="thanksMsg" style="display:none;">Your message is saved 💖</p>
+      <p id="savedReply" style="font-style: italic;"></p>
 
-  <p id="thanksMsg" style="display:none; margin-top:10px;">
-    Your message is saved 💖
-  </p>
-
-  <p id="savedReply" style="margin-top:12px; font-style: italic;"></p>
-
-  <div class="signature">
-    — From your IITian 💙 <br>
-    28th February 2026
+      <div class="signature">
+        — From your IITian 💙 <br>
+        28th February 2026
+      </div>
+    </div>
   </div>
-</div>
 
-
-  <!-- Optional Music -->
   <audio id="bgMusic" loop>
     <source src="song.mp3" type="audio/mpeg">
   </audio>
@@ -174,6 +171,11 @@
 
   <script>
     const correctPassword = "mou123";
+
+    const message =
+      "Dear Mou,\nFrom the day you came into my life, everything started to feel a little warmer, a little brighter, and a lot more meaningful. This page is just a tiny piece of how special you are to me 💖";
+
+    let i = 0;
 
     function unlock() {
       const input = document.getElementById("password").value;
@@ -186,18 +188,14 @@
         document.getElementById("error").innerText = "Oops! Wrong password 💔";
       }
     }
-    <p>
 
-    const message = "Dear Mou,\nFrom the day you came into my life, everything started to feel a little warmer, a little brighter, and a lot more meaningful. This page is just a tiny piece of how special you are to me 💖";
-    <p>
-    let i = 0;
     function startTyping() {
       const el = document.getElementById("typeText");
       const interval = setInterval(() => {
         el.innerText += message.charAt(i);
         i++;
         if (i >= message.length) clearInterval(interval);
-      }, 50);
+      }, 40);
     }
 
     function showSurprise() {
@@ -215,10 +213,10 @@
         heart.className = "heart";
         heart.innerText = "❤️";
         heart.style.left = Math.random() * 100 + "vw";
-        heart.style.fontSize = (16 + Math.random()*20) + "px";
+        heart.style.fontSize = (16 + Math.random() * 20) + "px";
         document.body.appendChild(heart);
         setTimeout(() => heart.remove(), 6000);
-      }, 500);
+      }, 600);
     }
 
     function toggleMusic() {
@@ -227,44 +225,26 @@
       else music.pause();
     }
 
-      function toggleMusic() {
-    const music = document.getElementById("bgMusic");
-    if (music.paused) music.play();
-    else music.pause();
-  }
-
-  // 👇 ADD THIS PART
-  function submitReply() {
-    const reply = document.getElementById("replyInput").value.trim();
-    if (!reply) return;
-
-    localStorage.setItem("mouReply", reply);
-
-    document.getElementById("thanksMsg").style.display = "block";
-    document.getElementById("savedReply").innerText =
-      "You wrote: “" + reply + "” 💖";
-
-    document.getElementById("replyInput").value = "";
-  }
-
-  window.addEventListener("load", () => {
-    const saved = localStorage.getItem("mouReply");
-    if (saved) {
-      document.getElementById("savedReply").innerText =
-        "You wrote: “" + saved + "” 💖";
+    function submitReply() {
+      const reply = document.getElementById("replyInput").value.trim();
+      if (!reply) return;
+      localStorage.setItem("mouReply", reply);
       document.getElementById("thanksMsg").style.display = "block";
+      document.getElementById("savedReply").innerText =
+        "You wrote: “" + reply + "” 💖";
+      document.getElementById("replyInput").value = "";
     }
-  });
-</script>
-</body>
-</html>
 
+    window.addEventListener("load", () => {
+      const saved = localStorage.getItem("mouReply");
+      if (saved) {
+        document.getElementById("savedReply").innerText =
+          "You wrote: “" + saved + "” 💖";
+        document.getElementById("thanksMsg").style.display = "block";
+      }
+    });
   </script>
 
 </body>
 </html>
-
-
-
-
 
