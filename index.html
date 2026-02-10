@@ -6,15 +6,26 @@
   <title>Happy Birthday Mou 💖</title>
 
   <style>
-    body {
-      margin: 0;
-      min-height: 100vh;
-      font-family: 'Segoe UI', sans-serif;
-      background: linear-gradient(135deg, #7b2ff7, #f107a3);
-      color: white;
-      text-align: center;
-      overflow-x: hidden;
-    }
+   body {
+  margin: 0;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;   /* centers content */
+  font-family: 'Segoe UI', sans-serif;
+  background: linear-gradient(135deg, #7b2ff7, #f107a3);
+  overflow-x: hidden;       /* 🔥 removes horizontal extra space */
+  color: white;
+  text-align: center;
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+.card {
+  width: 100%;
+  max-width: 420px;         /* keeps it mobile friendly */
+  margin: 0 auto;          /* center horizontally */
+}
 
     .screen {
       min-height: 100vh;
@@ -25,15 +36,7 @@
       padding: 20px;
     }
 
-    .card {
-      background: rgba(0,0,0,0.25);
-      backdrop-filter: blur(8px);
-      padding: 30px 20px;
-      border-radius: 20px;
-      max-width: 420px;
-      width: 100%;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.3);
-    }
+    
 
     h1 { margin: 10px 0; font-size: 2.2rem; }
     h2 { margin: 15px 0 10px; }
@@ -260,6 +263,7 @@
 
 </body>
 </html>
+
 
 
 
