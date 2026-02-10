@@ -221,9 +221,43 @@
       if (music.paused) music.play();
       else music.pause();
     }
+
+      function toggleMusic() {
+    const music = document.getElementById("bgMusic");
+    if (music.paused) music.play();
+    else music.pause();
+  }
+
+  // 👇 ADD THIS PART
+  function submitReply() {
+    const reply = document.getElementById("replyInput").value.trim();
+    if (!reply) return;
+
+    localStorage.setItem("mouReply", reply);
+
+    document.getElementById("thanksMsg").style.display = "block";
+    document.getElementById("savedReply").innerText =
+      "You wrote: “" + reply + "” 💖";
+
+    document.getElementById("replyInput").value = "";
+  }
+
+  window.addEventListener("load", () => {
+    const saved = localStorage.getItem("mouReply");
+    if (saved) {
+      document.getElementById("savedReply").innerText =
+        "You wrote: “" + saved + "” 💖";
+      document.getElementById("thanksMsg").style.display = "block";
+    }
+  });
+</script>
+</body>
+</html>
+
   </script>
 
 </body>
 </html>
+
 
 
