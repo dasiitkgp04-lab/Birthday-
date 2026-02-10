@@ -143,14 +143,24 @@
       <p id="wishText" class="hidden">Wish granted 🎉 May all your dreams come true 💫</p>
 
       <h2>One Line for Me 💬</h2>
-      <input type="text" placeholder="Write something for me..." />
 
-      <footer>
-        — From your IITian 💙 <br>
-        28th February 2026
-      </footer>
-    </div>
+<div class="one-line-card">
+  <input type="text" id="replyInput" placeholder="Write something for me..." />
+  <br/>
+  <button onclick="submitReply()">Submit 💌</button>
+
+  <p id="thanksMsg" style="display:none; margin-top:10px;">
+    Your message is saved 💖
+  </p>
+
+  <p id="savedReply" style="margin-top:12px; font-style: italic;"></p>
+
+  <div class="signature">
+    — From your IITian 💙 <br>
+    28th February 2026
   </div>
+</div>
+
 
   <!-- Optional Music -->
   <audio id="bgMusic" loop>
@@ -215,4 +225,5 @@
 
 </body>
 </html>
+
 
