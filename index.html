@@ -16,17 +16,18 @@
       justify-content: center;
       font-family: 'Segoe UI', sans-serif;
       background: linear-gradient(135deg, #7b2ff7, #f107a3);
+      overflow-y: auto;
       overflow-x: hidden;
       color: white;
       text-align: center;
-      padding: 20px;
+      padding: 15px;
     }
 
     .card {
       width: 100%;
       max-width: 420px;
-      background: rgba(0,0,0,0.18);
-      padding: 25px 20px;
+      background: rgba(0,0,0,0.2);
+      padding: 25px 18px;
       border-radius: 20px;
       backdrop-filter: blur(6px);
       box-shadow: 0 10px 25px rgba(0,0,0,0.3);
@@ -40,18 +41,19 @@
       flex-direction: column;
     }
 
-    h1 { margin: 10px 0; font-size: 2.1rem; }
+    h1 { margin: 10px 0; font-size: 2rem; }
     h2 { margin: 18px 0 10px; }
-    p { line-height: 1.6; font-size: 1.05rem; }
+    p { line-height: 1.6; font-size: 1rem; }
 
     input {
       padding: 12px;
       border-radius: 10px;
       border: none;
-      width: 80%;
+      width: 90%;
       max-width: 260px;
       font-size: 1rem;
       text-align: center;
+      outline: none;
     }
 
     button {
@@ -64,14 +66,17 @@
       font-size: 1rem;
       cursor: pointer;
       box-shadow: 0 6px 15px rgba(0,0,0,0.3);
+      transition: 0.2s ease;
     }
 
     button:hover { transform: scale(1.05); }
 
     .gallery img {
       width: 100%;
+      max-width: 300px;
       border-radius: 15px;
-      margin: 10px 0;
+      margin: 10px auto;
+      display: block;
     }
 
     .hidden { display: none; }
@@ -100,12 +105,18 @@
       font-size: 0.9rem;
       opacity: 0.85;
     }
+
+    .music-btn {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      z-index: 10;
+    }
   </style>
 </head>
 
 <body>
 
-  <!-- Password Screen -->
   <div class="screen" id="lockScreen">
     <div class="card">
       <h1>🔐 For Mou Only</h1>
@@ -117,7 +128,6 @@
     </div>
   </div>
 
-  <!-- Main Screen -->
   <div class="screen hidden" id="mainScreen">
     <div class="card">
       <h1>Happy Birthday, Mou 🎉💖</h1>
@@ -167,7 +177,7 @@
     <source src="song.mp3" type="audio/mpeg">
   </audio>
 
-  <button onclick="toggleMusic()" style="position:fixed;bottom:20px;right:20px;">🎶</button>
+  <button class="music-btn" onclick="toggleMusic()">🎶</button>
 
   <script>
     const correctPassword = "mou123";
@@ -182,6 +192,7 @@
       if (input === correctPassword) {
         document.getElementById("lockScreen").classList.add("hidden");
         document.getElementById("mainScreen").classList.remove("hidden");
+        document.getElementById("bgMusic").play();
         startTyping();
         startHearts();
       } else {
@@ -191,11 +202,13 @@
 
     function startTyping() {
       const el = document.getElementById("typeText");
+      el.innerText = "";
+      i = 0;
       const interval = setInterval(() => {
         el.innerText += message.charAt(i);
         i++;
         if (i >= message.length) clearInterval(interval);
-      }, 40);
+      }, 35);
     }
 
     function showSurprise() {
@@ -216,13 +229,12 @@
         heart.style.fontSize = (16 + Math.random() * 20) + "px";
         document.body.appendChild(heart);
         setTimeout(() => heart.remove(), 6000);
-      }, 600);
+      }, 700);
     }
 
     function toggleMusic() {
       const music = document.getElementById("bgMusic");
-      if (music.paused) music.play();
-      else music.pause();
+      music.paused ? music.play() : music.pause();
     }
 
     function submitReply() {
@@ -235,14 +247,14 @@
       document.getElementById("replyInput").value = "";
     }
 
-    window.addEventListener("load", () => {
+    window.onload = () => {
       const saved = localStorage.getItem("mouReply");
       if (saved) {
         document.getElementById("savedReply").innerText =
           "You wrote: “" + saved + "” 💖";
         document.getElementById("thanksMsg").style.display = "block";
       }
-    });
+    };
   </script>
 
 </body>
